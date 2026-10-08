@@ -101,7 +101,7 @@ public  void deleteMerchant(String merchantId){
           throw  new ResourceNotFoundException("Merchant Not Found");
 
       }
-      if(!Objects.equals(merchant.getMerchantName(), merchantName)){
+      if(merchant.getMerchantName().equalsIgnoreCase(merchantName)){
           return  false;
       }
       return true;
