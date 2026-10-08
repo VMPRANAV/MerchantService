@@ -8,6 +8,8 @@ import com.example.merchant.repository.MerchantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class MerchantServiceImpl implements MerchantService {
     @Autowired
@@ -22,7 +24,7 @@ public class MerchantServiceImpl implements MerchantService {
                 .phone(merchantRequestDTO.getPhone())
                 .companyName(merchantRequestDTO.getCompanyName())
                 .companyAddress(merchantRequestDTO.getCompanyAddress())
-                .GSTNumber(merchantRequestDTO.getGSTNumber())
+                .gstNumber(merchantRequestDTO.getGstNumber())
                 .warehouseAddress(merchantRequestDTO.getWarehouseAddress())
                 .build();
         merchantRepository.save(merchant);
@@ -33,7 +35,7 @@ public class MerchantServiceImpl implements MerchantService {
                 .phone(merchant.getPhone())
                 .companyName(merchant.getCompanyName())
                 .companyAddress(merchant.getCompanyAddress())
-                .GSTNumber(merchant.getGSTNumber())
+                .GSTNumber(merchant.getGstNumber())
                 .warehouseAddress(merchant.getWarehouseAddress())
                 .build();
     }
@@ -48,7 +50,7 @@ merchant.setEmail(merchantRequestDTO.getEmail());
 merchant.setPhone(merchantRequestDTO.getPhone());
 merchant.setCompanyName(merchantRequestDTO.getCompanyName());
 merchant.setCompanyAddress(merchantRequestDTO.getCompanyAddress());
-merchant.setGSTNumber(merchantRequestDTO.getGSTNumber());
+merchant.setGstNumber(merchantRequestDTO.getGstNumber());
 merchant.setWarehouseAddress(merchantRequestDTO.getWarehouseAddress());
 merchantRepository.save(merchant);
 return MerchantResponseDTO.builder()
@@ -58,7 +60,7 @@ return MerchantResponseDTO.builder()
         .phone(merchant.getPhone())
         .companyName(merchant.getCompanyName())
         .companyAddress(merchant.getCompanyAddress())
-        .GSTNumber(merchant.getGSTNumber())
+        .GSTNumber(merchant.getGstNumber())
         .warehouseAddress(merchant.getWarehouseAddress())
         .build();
 
@@ -87,9 +89,22 @@ public  void deleteMerchant(String merchantId){
                 .phone(merchant.getPhone())
                 .companyName(merchant.getCompanyName())
                 .companyAddress(merchant.getCompanyAddress())
-                .GSTNumber(merchant.getGSTNumber())
+                .GSTNumber(merchant.getGstNumber())
                 .warehouseAddress(merchant.getWarehouseAddress())
                 .build();
+    }
+
+    @Override
+    public boolean verifyMerchant(String merchantId, String merchantName) {
+     Merchant merchant=  merchantRepository.findByMerchantId(merchantId);
+      if(merchant==null){
+          throw  new ResourceNotFoundException("Merchant Not Found");
+
+      }
+      if(!Objects.equals(merchant.getMerchantName(), merchantName)){
+          return  false;
+      }
+      return true;
     }
 
     private String generateMerchantId() {

@@ -8,12 +8,16 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.resource.ResourceTransformer;
 
 @RestController
 @RequestMapping("/merchant")
 public class MerchantController {
     @Autowired
     private MerchantService merchantService;
+    @Autowired
+    private ResourceTransformer resourceTransformer;
+
     @PostMapping
     public ResponseEntity<MerchantResponseDTO> createMerchant(@Valid @RequestBody MerchantRequestDTO merchantRequestDTO){
 
@@ -32,6 +36,10 @@ public class MerchantController {
     @GetMapping("/{merchantId}")
     public ResponseEntity<MerchantResponseDTO> getMerchantDetails(@PathVariable String merchantId){
         return ResponseEntity.ok().body(merchantService.getMerchantDetails(merchantId));
+    }
+    @GetMapping("/exists")
+    public ResponseEntity<Boolean> verifyMerchant(@RequestParam String merchantId, @RequestParam String merchantName){
+        return ResponseEntity.ok().body(merchantService.verifyMerchant(merchantId,merchantName));
     }
 
 }

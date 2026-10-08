@@ -10,4 +10,5 @@ public interface MerchantService {
     public  MerchantResponseDTO updateMerchant(String merchantId, MerchantRequestDTO merchantRequestDTO);
     public void deleteMerchant(String merchantId);
     public MerchantResponseDTO getMerchantDetails(String merchantId);
+    public boolean verifyMerchant(String merchantId,String merchantName);
 }

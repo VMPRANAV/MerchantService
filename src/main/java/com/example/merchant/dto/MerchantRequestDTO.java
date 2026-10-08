@@ -28,7 +28,7 @@ public class MerchantRequestDTO {
  @Valid
     private Address companyAddress;
     @NotBlank
-    private String GSTNumber;
+    private String gstNumber;
 @Valid
     private List<Address> warehouseAddress;
 }

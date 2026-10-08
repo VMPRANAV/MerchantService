@@ -20,7 +20,6 @@ public class Merchant {
     private String phone;
     private String companyName;
     private Address companyAddress;
-    @Indexed(unique = true)
-    private String GSTNumber;
+    private String gstNumber;
     private List<Address>warehouseAddress;
 }
